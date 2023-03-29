@@ -82,7 +82,7 @@ int main()
     return 0;
 }
 
-"""
+/*
 範例輸出:
 
 25
@@ -92,7 +92,7 @@ Child process!
 End! 
 This is the parent process,and child's pid =8361 . exit status=0 
 End!     
-"""
+*/
 
 
 
