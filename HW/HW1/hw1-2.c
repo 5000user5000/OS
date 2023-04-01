@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
         child_pid = wait(&status);
         i = WEXITSTATUS(status);
         printf("This is the parent process,and child's pid =%d . exit status=%d \n", child_pid, i);
-         // 從共享內存區域中讀取數據
+         // 從共享記憶體區域中讀取數據
         printf("%s\n", (char *) ptr);
 
        if (munmap(ptr, SHM_SIZE) == -1) {  // 解除映射關係
