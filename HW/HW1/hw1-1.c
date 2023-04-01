@@ -14,7 +14,7 @@ void collatz(int n)
 
     int count = 0;
     //先輸出第一個數字
-    printf("%d,", n);
+    printf("%d, ", n);
     while(n != 1)
     {
         
@@ -33,7 +33,7 @@ void collatz(int n)
 
         //輸出格式 (最後一個,也就是n==1時，後面不用加逗號)
         if(n == 1){
-          printf("%d", n);
+          printf("%d \n", n);
         }
         else{
           printf("%d, ", n);
@@ -43,25 +43,32 @@ void collatz(int n)
     printf("The number of steps is %d \n", count);
 }
 
-int main()
+int main(int argc, char *argv[])
 {
-    int n;
+    if(argc != 2)
+    {
+      printf("Please give a correct command，like ./test 25");
+      exit(1);
+    }
+    
+    int n = atoi(argv[1]); //char轉成int。附註:第二個參數才是數字，第一個是指令本身。
     int count = 0;
     pid_t pid;
     pid_t child_pid;
     int status, i;
 
-    scanf("%d", &n);
+    //scanf("%d", &n);
     //輸出必大於等於1
     if(n < 1){
       printf("Please not input less than 1 \n");
+      exit(1);
     }
     
     // 建立子行程
     pid = fork();
 
     if (pid == 0) {
-        printf("Child process! \n");
+        printf("Child process! pid = 0 \n");
         collatz(n); //讓子行程執行此collatz
     } 
     else if (pid > 0) {
@@ -76,23 +83,15 @@ int main()
         // 錯誤
         printf("Error! \n");
     }
-
-    printf("End! \n");
+    
+    if(pid==0){
+        printf("child End! \n");
+    }
+    
+    
+    else{
+        printf("Parent End! \n");
+    }
 
     return 0;
 }
-
-/*
-範例輸出:
-
-25
-This is the parent process, wait for child...
-Child process! 
-25,76, 38, 19, 58, 29, 88, 44, 22, 11, 34, 17, 52, 26, 13, 40, 20, 10, 5, 16, 8, 4, 2, 1The number of steps is 23 
-End! 
-This is the parent process,and child's pid =8361 . exit status=0 
-End!     
-*/
-
-
-
