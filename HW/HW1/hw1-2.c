@@ -38,15 +38,22 @@ char* collatz(int n)
     return str;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+    
+    if(argc != 2)
+    {
+      printf("Please give a correct command，like ./test 25");
+      exit(1);
+    }
+    
+    int n = atoi(argv[1]); //char轉成int
 
-    int n;
     int count = 0;
     pid_t pid;
     pid_t child_pid;
     int status, i;
     
-    scanf("%d", &n);
+    //scanf("%d", &n);
     //輸出必大於等於1
     if(n < 1){
         printf("Please not input less than 1 \n");
@@ -82,6 +89,7 @@ int main() {
         // 向共享記憶體區域中寫入數據
         sprintf(ptr, "%s", str);
         free(str);  // 釋放動態分配的記憶體
+        printf("Child End!");
         exit(0);  // 子行程執行完畢，直接退出
     } 
     else{
@@ -103,6 +111,7 @@ int main() {
             perror("shm_unlink");
             exit(1);
         }
+        printf("Parent End!");
     
     
     } 
@@ -111,13 +120,3 @@ int main() {
 
     return 0;
 }
-
-/*
-輸出範例:
-輸入:25
-This is the parent process, wait for child...
-Child process!
-The number of steps is 23
-This is the parent process,and child's pid =3732 . exit status=0 
-25, 76, 38, 19, 58, 29, 88, 44, 22, 11, 34, 17, 52, 26, 13, 40, 20, 10, 5, 16, 8, 4, 2, 1
-*/
