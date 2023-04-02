@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
             write(fileCopy, readBuff, strlen(readBuff)); // 將內容寫入文件
         }
         close(fd[0]); // 關閉讀取端
-        close(fileOpen); // 關閉文件
+        close(fileCopy); // 關閉文件
         
     } else { // 父行程
         close(fd[0]); // 關閉讀取端，因爲我們只需要寫入端，否則會阻塞
@@ -49,20 +49,8 @@ int main(int argc, char *argv[]) {
             memset(readBuff, 0, sizeof(readBuff)); // 清空暫存區
         }
         close(fd[1]); // 關閉讀取端
-        close(fileCopy); // 關閉文件
-
+        close(fileOpen); // 關閉文件
     }
 
     return 0;
 }
-/*
-指令格式：.
-gcc hw1-3.c -o filecopy
-echo "Hello World" > input.txt
-./filecopy input.txt copy.txt
-cat copy.txt
-
-*/
-
-
-
