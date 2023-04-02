@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
     if (pid == 0) { // 子行程
         close(fd[1]); // 關閉寫入端
          while(read(fd[0], readBuff, sizeof(readBuff)) > 0) { // 從讀取端讀取內容
-            write(fileCopy, readBuff, size); // 將內容寫入文件
+            write(fileCopy, readBuff, strlen(readBuff) - 1); // 將內容寫入文件
         }
         close(fd[0]); // 關閉讀取端
         close(fileOpen); // 關閉文件
@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
     } else { // 父行程
         close(fd[0]); // 關閉讀取端，因爲我們只需要寫入端，否則會阻塞
         while(read(fileOpen, readBuff, sizeof(readBuff)) > 0) { // 從文件讀取內容
-            write(fd[1], readBuff, size); // 將內容寫入管道
+            write(fd[1], readBuff, strlen(readBuff) - 1); // 將內容寫入管道
             memset(readBuff, 0, sizeof(readBuff)); // 清空暫存區
         }
         close(fd[1]); // 關閉讀取端
