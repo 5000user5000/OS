@@ -11,16 +11,16 @@
 ## hw1-2 <br>
 hw1-1的延伸，使用share memory的方式把子程序的運算結果傳給父程序來打印。
 
-> gcc test -o hw1-1.c  -lrt <br>
-> ./test 25
+> gcc test2 -o hw1-1.c  -lrt <br>
+> ./test2 25
 
 附註:這個-lrt選項可以讓編譯器使用POSIX實時庫，這個庫包含了shm_open和shm_unlink等需要的函數。
 
 ## hw1-3 <br>
-使用unix pipe的方式，先讓子程序把源文件的內容寫入pipe，再讓父程序從pipe把內容寫入副本。
-但副本會出現亂碼，尚未解決，應該是input.txt會多留一行空白出現問題。
+使用unix pipe的方式，先讓子程序把源文件的內容寫入pipe，再讓父程序從pipe把內容寫入副本。<br>
+之前副本會出現亂碼，已經解決，把 write(fileCopy, readBuff, size); 的 size 改成 strlen(readBuff)。
 
 > gcc -o filecopy  hw1-3.c <br>
-> echo "Hello World" > input.txt
->./filecopy input.txt copy.txt
+> echo "Hello World" > input.txt <br>
+>./filecopy input.txt copy.txt <br>
 > cat copy.txt
